@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="cortex-agent-authored" name="snowflake-source"/>
-<title>시맨틱 레이어 및 에이전트 생성 | From Zero to Agents · AI 에이전트 실습</title>
-<script id="snowflake-report-metadata" type="application/json">{"generated": "2026-10-30", "intent": "Translated educational guide", "source_date": "2026-10-11", "dataSources": [{"type": "url", "url": "https://www.snowflake.com/en/developers/guides/from-zero-to-agents/"}, {"type": "url", "url": "https://qsang86.github.io/from-zero-to-agents-kr/", "purpose": "Korean terminology and phrasing reference; not authoritative for completeness"}, {"type": "file", "path": "source/manifest.json"}, {"type": "file", "path": "content/ko.json"}, {"type": "file", "path": "content/review.json"}], "sections": [{"id": "semantic-layer-and-agent-creation", "title": "시맨틱 레이어 및 에이전트 생성", "dataSources": [{"type": "file", "path": "chapters/semantic-layer.html"}], "producerNotes": "Reviewed translation supplied as local HTML. Renderer executes no lab code."}], "producerNotes": "Full English article translated; SQL unchanged except mapped comments. No Snowflake execution or deployment."}</script>
+<title>시맨틱 레이어 생성 | From Zero to Agents · AI 에이전트 실습</title>
+<script id="snowflake-report-metadata" type="application/json">{"generated": "2026-10-30", "intent": "Translated educational guide", "source_date": "2026-10-11", "dataSources": [{"type": "url", "url": "https://www.snowflake.com/en/developers/guides/from-zero-to-agents/"}, {"type": "url", "url": "https://qsang86.github.io/from-zero-to-agents-kr/", "purpose": "Korean terminology and phrasing reference; not authoritative for completeness"}, {"type": "file", "path": "source/manifest.json"}, {"type": "file", "path": "content/ko.json"}, {"type": "file", "path": "content/review.json"}], "sections": [{"id": "semantic-layer-and-agent-creation", "title": "시맨틱 레이어 생성", "dataSources": [{"type": "file", "path": "chapters/semantic-layer.html"}], "producerNotes": "Reviewed translation supplied as local HTML. Renderer executes no lab code."}], "producerNotes": "Full English article translated; SQL unchanged except mapped comments. No Snowflake execution or deployment."}</script>
 <script id="guide-ui" type="application/json">{"html_lang": "ko", "skip": "본문으로 이동", "source": "영어 원문", "print": "현재 장 인쇄", "menu": "목차", "chapters": "전체 목차", "current_chapter": "이 장의 내용", "sidebar_title": "교육 가이드", "source_date": "원문 기준", "no_script": "본문과 목차는 JavaScript 없이도 읽을 수 있습니다. 코드 복사와 이미지 확대는 JavaScript가 필요합니다.", "footer": "교육용 참고 번역 · 공식 웹사이트가 아닙니다", "image": "원본 이미지 확대", "close": "확대 이미지 닫기", "copy": "복사", "copy_label": "이 블록을 클립보드에 복사", "copied": "클립보드에 복사했습니다.", "copy_fallback": "텍스트를 선택했습니다. Ctrl+C 또는 ⌘C로 복사하세요.", "enlarge": "확대", "previous": "이전", "next": "다음", "home": "처음으로", "code": "코드 / 텍스트", "attendee_notice": "교육 참석자용 · 외부 공유 및 재배포 금지", "theme_to_dark": "다크 모드로 전환", "theme_to_light": "라이트 모드로 전환"}</script>
 <script>(() => {
   const theme = new URLSearchParams(location.search).get('theme');
@@ -238,7 +238,7 @@ h3:hover .anchor-link, h4:hover .anchor-link, .anchor-link:focus { opacity: 1; }
 <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
 </button>
 <div class="sidebar-content" id="sidebar-content">
-<nav aria-label="전체 목차"><ol class="chapters"><li><a href="index.html"><span>01</span>개요</a></li><li><a href="setup.html"><span>02</span>환경 설정 및 데이터 로딩</a></li><li><a href="cortex-ai.html"><span>03</span>Cortex AI로 데이터 보강</a></li><li><a href="live-pipeline.html"><span>04</span>지속적으로 데이터를 보강하는 파이프라인 생성</a></li><li><a aria-current="page" href="semantic-layer.html"><span>05</span>시맨틱 레이어 및 에이전트 생성</a></li><li><a href="create-agent.html"><span>06</span>에이전트 생성</a></li><li><a href="validation.html"><span>07</span>검증</a></li><li><a href="security.html"><span>08</span>보안 (선택)</a></li><li><a href="resources.html"><span>09</span>마무리 및 참고 자료</a></li></ol></nav>
+<nav aria-label="전체 목차"><ol class="chapters"><li><a href="index.html"><span>01</span>개요</a></li><li><a href="setup.html"><span>02</span>환경 설정 및 데이터 로딩</a></li><li><a href="cortex-ai.html"><span>03</span>Cortex AI로 데이터 보강</a></li><li><a href="live-pipeline.html"><span>04</span>지속적으로 데이터를 보강하는 파이프라인 생성</a></li><li><a aria-current="page" href="semantic-layer.html"><span>05</span>시맨틱 레이어 생성</a></li><li><a href="create-agent.html"><span>06</span>에이전트 생성</a></li><li><a href="validation.html"><span>07</span>검증</a></li><li><a href="security.html"><span>08</span>보안 (선택)</a></li><li><a href="resources.html"><span>09</span>마무리 및 참고 자료</a></li></ol></nav>
 <details class="local-nav" open="">
 <summary>이 장의 내용</summary>
 <nav aria-label="이 장의 내용"><ol><li><a href="#t082">Cortex Analyst 생성</a></li><li><a href="#t103">Cortex Search Service 생성</a></li></ol></nav>
@@ -247,7 +247,7 @@ h3:hover .anchor-link, h4:hover .anchor-link, .anchor-link:focus { opacity: 1; }
 </aside>
 <main id="main" tabindex="-1">
 <p class="eyebrow">From Zero to Agents · AI 에이전트 실습 · 05 / 09</p>
-<h1 class="page-title" id="semantic-layer-and-agent-creation">시맨틱 레이어 및 에이전트 생성</h1>
+<h1 class="page-title" id="semantic-layer-and-agent-creation">시맨틱 레이어 생성</h1>
 <div class="page-meta"><span>한국어</span><span>원문 기준 2026-10-11</span></div>
 <noscript><p class="no-script">본문과 목차는 JavaScript 없이도 읽을 수 있습니다. 코드 복사와 이미지 확대는 JavaScript가 필요합니다.</p></noscript>
 <article>
