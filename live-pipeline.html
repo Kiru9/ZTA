@@ -264,7 +264,11 @@ TARGET_LAG = '1 hours'
 WAREHOUSE = dash_wh_si
 AS
 SELECT m.campaign_name, m.clicks, s.product AS product_name,
-       AI_SENTIMENT(s.transcript):categories[0]:sentiment::STRING AS avg_sentiment
+       CASE AI_SENTIMENT(s.transcript):categories[0]:sentiment::STRING
+            WHEN 'positive' THEN 1
+            WHEN 'negative' THEN -1
+            ELSE 0
+       END AS avg_sentiment
 FROM marketing_campaign_metrics m
 JOIN support_cases s ON m.category = s.product;
 </code></pre></div>
