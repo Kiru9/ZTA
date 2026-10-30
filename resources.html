@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="cortex-agent-authored" name="snowflake-source"/>
+<title>마무리 및 참고 자료 | From Zero to Agents · AI 에이전트 실습</title>
+<script id="snowflake-report-metadata" type="application/json">{"generated": "2026-10-30", "intent": "Translated educational guide", "source_date": "2026-10-11", "dataSources": [{"type": "url", "url": "https://www.snowflake.com/en/developers/guides/from-zero-to-agents/"}, {"type": "url", "url": "https://qsang86.github.io/from-zero-to-agents-kr/", "purpose": "Korean terminology and phrasing reference; not authoritative for completeness"}, {"type": "file", "path": "source/manifest.json"}, {"type": "file", "path": "content/ko.json"}, {"type": "file", "path": "content/review.json"}], "sections": [{"id": "conclusion-and-resources", "title": "마무리 및 참고 자료", "dataSources": [{"type": "file", "path": "chapters/resources.html"}], "producerNotes": "Reviewed translation supplied as local HTML. Renderer executes no lab code."}], "producerNotes": "Full English article translated; SQL unchanged except mapped comments. No Snowflake execution or deployment."}</script>
+<script id="guide-ui" type="application/json">{"html_lang": "ko", "skip": "본문으로 이동", "source": "영어 원문", "print": "현재 장 인쇄", "menu": "목차", "chapters": "전체 목차", "current_chapter": "이 장의 내용", "sidebar_title": "교육 가이드", "source_date": "원문 기준", "no_script": "본문과 목차는 JavaScript 없이도 읽을 수 있습니다. 코드 복사와 이미지 확대는 JavaScript가 필요합니다.", "footer": "교육용 참고 번역 · 공식 웹사이트가 아닙니다", "image": "원본 이미지 확대", "close": "확대 이미지 닫기", "copy": "복사", "copy_label": "이 블록을 클립보드에 복사", "copied": "클립보드에 복사했습니다.", "copy_fallback": "텍스트를 선택했습니다. Ctrl+C 또는 ⌘C로 복사하세요.", "enlarge": "확대", "previous": "이전", "next": "다음", "home": "처음으로", "code": "코드 / 텍스트", "attendee_notice": "교육 참석자용 · 외부 공유 및 재배포 금지", "theme_to_dark": "다크 모드로 전환", "theme_to_light": "라이트 모드로 전환"}</script>
+<script>(() => {
+  const theme = new URLSearchParams(location.search).get('theme');
+  if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+})();</script><style>
+:root {
+  color-scheme: light dark;
+  --bg: #fff;
+  --surface: #f3f7fa;
+  --ink: #172b42;
+  --muted: #526578;
+  --line: #dbe5ec;
+  --accent: #087fab;
+  --nav: #eef7fb;
+  --code: #11283d;
+  --code-ink: #eef7ff;
+  font-family: var(--guide-font), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 90px; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.85; }
+a { color: var(--accent); text-underline-offset: 4px; overflow-wrap: anywhere; }
+button, a, input, summary { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid #e9a23b; outline-offset: 4px; }
+.skip { position: fixed; left: 16px; top: -80px; padding: 10px; background: var(--bg); z-index: 20; }
+.skip:focus { top: 10px; }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  height: 68px;
+  padding: 0 30px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand { color: var(--ink); text-decoration: none; font-size: 17px; font-weight: 750; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.brand svg { width: 26px; height: 26px; stroke: #29b5e8; fill: none; stroke-width: 2; flex-shrink: 0; }
+.top-actions { display: flex; align-items: center; gap: 18px; font-size: 13px; min-width: 0; max-width: 55%; flex-shrink: 0; }
+.top-actions > a, .language { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.language { font-size: 11px; letter-spacing: .12em; color: var(--muted); }
+.icon-button { border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 36px; height: 36px; padding: 7px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.icon-button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+.layout { max-width: 1500px; margin: auto; display: grid; grid-template-columns: 268px minmax(0, 1fr); }
+.sidebar { position: sticky; top: 68px; align-self: start; max-height: calc(100dvh - 68px); overflow-y: auto; padding: 28px 20px; border-right: 1px solid var(--line); min-width: 0; }
+.sidebar-title { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 12px 14px; overflow-wrap: anywhere; }
+.chapters { list-style: none; padding: 0; margin: 0; }
+.chapters li { margin: 3px 0; }
+.chapters a { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 6px; text-decoration: none; color: var(--muted); font-size: 13px; line-height: 1.55; padding: 10px 12px; border-left: 3px solid transparent; }
+.chapters a[aria-current=page] { background: var(--nav); border-left-color: var(--accent); color: var(--ink); font-weight: 700; }
+.chapters a:hover { color: var(--accent); background: var(--surface); }
+.chapters span { font-size: 11px; font-variant-numeric: tabular-nums; opacity: .7; }
+.local-nav { margin: 22px 0 0; padding: 18px 12px 0; border-top: 1px solid var(--line); }
+.local-nav summary { font-size: 13px; font-weight: 700; cursor: pointer; overflow-wrap: anywhere; }
+.local-nav ol { list-style: none; padding: 8px 0; margin: 0; }
+.local-nav a { font-size: 12px; line-height: 1.55; display: block; margin: 10px 0; text-decoration: none; color: var(--muted); }
+main { min-width: 0; padding: 48px clamp(22px, 5vw, 78px) 32px; max-width: 1130px; overflow-wrap: anywhere; }
+.eyebrow { font-size: 12px; letter-spacing: .15em; color: var(--accent); font-weight: 750; margin: 0 0 12px; }
+.page-title { font-size: clamp(30px, 4vw, 46px); line-height: 1.25; letter-spacing: -.035em; margin: 0 0 18px; word-break: keep-all; overflow-wrap: anywhere; }
+.page-meta { font-size: 12px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 30px; }
+.page-meta > span { min-width: 0; }
+.notice { border-left: 3px solid var(--accent); padding: 12px 18px; background: var(--nav); font-size: 13px; line-height: 1.8; margin: 24px 0; }
+.notice summary { cursor: pointer; font-weight: 700; }
+.notice p { margin: 8px 0; }
+.notice a { font-size: inherit; }
+article h2, article h3, article h4 { line-height: 1.45; word-break: keep-all; scroll-margin-top: 90px; }
+article h2 { font-size: 28px; margin: 50px 0 20px; }
+article h3 { font-size: 23px; margin: 48px 0 16px; border-top: 1px solid var(--line); padding-top: 28px; }
+article h4 { font-size: 18px; margin: 32px 0 12px; }
+article h3 strong, article h4 strong { font-weight: 700; }
+article p { margin: 14px 0; }
+article li { padding-left: 3px; margin: 7px 0; }
+article ul, article ol { padding-left: 25px; }
+article strong { font-weight: 680; }
+article code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; overflow-wrap: anywhere; background: var(--surface); padding: 2px 5px; border-radius: 3px; }
+article pre { white-space: pre; overflow: auto; max-width: 100%; margin: 0; padding: 18px 20px; line-height: 1.65; tab-size: 4; }
+article pre code { padding: 0; background: none; color: inherit; font-size: 13px; overflow-wrap: normal; }
+.code-frame { margin: 20px 0 26px; background: var(--code); color: var(--code-ink); border: 1px solid #2b475b; min-width: 0; }
+.code-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 12px; border-bottom: 1px solid #355267; font-size: 10px; letter-spacing: .07em; color: #bed3e3; }
+.copy-button { background: none; border: 0; color: inherit; padding: 5px; display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0; }
+.copy-button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; flex-shrink: 0; }
+.original { margin: 12px 0 24px; font-size: 13px; color: var(--muted); }
+.original summary { cursor: pointer; }
+.original pre { white-space: pre-wrap; }
+.prompt-ko pre { white-space: pre-wrap; }
+.figure { margin: 26px 0 34px; }
+.figure img { max-width: 100%; height: auto; display: block; border: 1px solid var(--line); background: white; }
+.image-button { display: block; border: 0; background: none; padding: 0; width: 100%; text-align: left; cursor: zoom-in; }
+.figure figcaption { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+.table-wrap { overflow: auto; max-width: 100%; margin: 24px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { border: 1px solid var(--line); padding: 10px 14px; text-align: left; }
+th { background: var(--surface); }
+.anchor-link { font-size: 14px; text-decoration: none; margin-left: 9px; opacity: 0; font-weight: 400; }
+h3:hover .anchor-link, h4:hover .anchor-link, .anchor-link:focus { opacity: 1; }
+.chapter-footer { margin-top: 52px; border-top: 1px solid var(--line); padding-top: 24px; display: flex; justify-content: space-between; gap: 24px; font-size: 14px; }
+.chapter-footer a { max-width: 48%; min-width: 0; text-decoration: none; }
+.chapter-footer span { display: block; font-size: 11px; color: var(--muted); }
+.page-footer { font-size: 11px; line-height: 1.7; color: var(--muted); margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
+.image-dialog { width: min(96vw, 1500px); max-height: 94dvh; padding: 16px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.image-dialog::backdrop { background: rgba(4, 18, 30, .84); }
+.dialog-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.dialog-top p { font-size: 13px; margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.image-dialog img { display: block; max-width: 100%; height: auto; margin: auto; }
+.status { position: fixed; bottom: 18px; right: 18px; background: var(--ink); color: var(--bg); padding: 10px 16px; font-size: 13px; z-index: 30; max-width: calc(100vw - 36px); overflow-wrap: anywhere; }
+.status:empty { display: none; }
+.mobile-menu { display: none; }
+.mobile-menu svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; flex-shrink: 0; }
+.progress { position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: transparent; }
+.progress span { display: block; height: 100%; background: #29b5e8; width: 0; }
+.no-script { font-size: 13px; color: var(--muted); }
+.inline-translation { font-size: 13px; border-left: 2px solid var(--line); padding: 8px 14px; margin: 14px 0; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101c28;
+    --surface: #192b3c;
+    --ink: #e4edf5;
+    --muted: #a6bacd;
+    --line: #304354;
+    --accent: #62cdf4;
+    --nav: #152e41;
+    --code: #0b1722;
+    --code-ink: #dfedf8;
+  }
+  .figure img { opacity: .94; }
+}
+
+@media (max-width: 850px) {
+  .layout { grid-template-columns: 220px minmax(0, 1fr); }
+  .sidebar { padding: 24px 12px; }
+  main { padding: 32px 24px; }
+  .topbar { padding: 0 20px; }
+}
+
+@media (max-width: 650px) {
+  .topbar { height: 60px; padding: 0 16px; }
+  .brand { font-size: 14px; gap: 8px; }
+  .brand svg { width: 22px; }
+  .language { display: none; }
+  .top-actions { gap: 10px; }
+  .top-actions > a { font-size: 11px; }
+  .layout { display: block; }
+  .sidebar { position: static; max-height: none; border-right: 0; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .sidebar-title { display: none; }
+  .mobile-menu { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; border: 0; background: none; color: var(--ink); padding: 0; font-weight: 650; font-size: 13px; overflow-wrap: anywhere; }
+  .mobile-menu span { min-width: 0; }
+  .js .sidebar-content { display: none; }
+  .js .sidebar-content.open { display: block; padding-top: 12px; }
+  .chapters a { font-size: 13px; }
+  .local-nav { margin-top: 10px; }
+  main { padding: 30px 20px; }
+  .page-title { font-size: 31px; }
+  .page-meta { gap: 8px 18px; }
+  article h3 { font-size: 21px; }
+  article h4 { font-size: 17px; }
+  article pre { padding: 15px; }
+  body { font-size: 15px; }
+  .figure { margin: 22px 0; }
+  .chapter-footer { font-size: 13px; gap: 14px; }
+  .image-dialog { padding: 10px; }
+  .page-footer { font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+@media print {
+  .topbar, .sidebar, .copy-button, .anchor-link, .chapter-footer, .status, .image-dialog { display: none !important; }
+  .layout { display: block; }
+  main { max-width: none; padding: 0; }
+  body { background: white; color: #111; font-size: 11pt; }
+  article h3, article h4 { break-after: avoid; }
+  article pre { white-space: pre-wrap; overflow: visible; }
+  .code-frame { background: #f5f5f5; color: #111; border-color: #bbb; break-inside: avoid; }
+  .code-header { color: #333; border-color: #bbb; }
+  .figure { break-inside: avoid; }
+  .notice, .original { background: none; }
+  .page-meta, .page-footer { color: #444; }
+  a { color: #174b69; }
+  .figure img { max-height: 220mm; object-fit: contain; }
+  .page-title { font-size: 25pt; }
+}
+:root { --guide-font: "Noto Sans KR"; }
+  
+:root[data-theme="light"] { color-scheme: light; --bg: #fff; --surface: #f3f7fa; --ink: #172b42; --muted: #526578; --line: #dbe5ec; --accent: #087fab; --nav: #eef7fb; --code: #11283d; --code-ink: #eef7ff; }
+:root[data-theme="dark"] { color-scheme: dark; --bg: #101c28; --surface: #192b3c; --ink: #e4edf5; --muted: #a6bacd; --line: #304354; --accent: #62cdf4; --nav: #152e41; --code: #0b1722; --code-ink: #dfedf8; }
+:root[data-theme="light"] .figure img { opacity: 1; }
+:root[data-theme="dark"] .figure img { opacity: .94; }
+.theme-button .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-button .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-button .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-button .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-button .icon-moon { display: none; }
+}
+.no-js-hidden { display: none; }
+.js .theme-button.no-js-hidden { display: inline-flex; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 이동</a>
+<header class="topbar">
+<a class="brand" href="index.html">
+<svg aria-hidden="true" viewbox="0 0 32 32"><path d="M7 3h12l6 6v20H7zM19 3v7h6M11 16h10M11 21h10"></path></svg>
+<span>From Zero to Agents · AI 에이전트 실습</span>
+</a>
+<div class="top-actions">
+<span class="language">한국어</span>
+<a href="https://www.snowflake.com/en/developers/guides/from-zero-to-agents/" rel="noopener noreferrer" target="_blank">영어 원문</a>
+<button class="icon-button theme-button no-js-hidden" data-theme-toggle="" type="button">
+<svg aria-hidden="true" class="icon-moon" viewbox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+<svg aria-hidden="true" class="icon-sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+</button></div>
+<div aria-hidden="true" class="progress"><span></span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<p class="sidebar-title">교육 가이드</p>
+<button aria-controls="sidebar-content" aria-expanded="false" aria-label="목차" class="mobile-menu" type="button">
+<span>목차</span>
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+</button>
+<div class="sidebar-content" id="sidebar-content">
+<nav aria-label="전체 목차"><ol class="chapters"><li><a href="index.html"><span>01</span>개요</a></li><li><a href="setup.html"><span>02</span>환경 설정 및 데이터 로딩</a></li><li><a href="cortex-ai.html"><span>03</span>Cortex AI로 데이터 보강</a></li><li><a href="live-pipeline.html"><span>04</span>지속적으로 데이터를 보강하는 파이프라인 생성</a></li><li><a href="semantic-layer.html"><span>05</span>시맨틱 레이어 및 에이전트 생성</a></li><li><a href="create-agent.html"><span>06</span>에이전트 생성</a></li><li><a href="validation.html"><span>07</span>검증</a></li><li><a href="security.html"><span>08</span>보안 (선택)</a></li><li><a aria-current="page" href="resources.html"><span>09</span>마무리 및 참고 자료</a></li></ol></nav>
+<details class="local-nav" open="">
+<summary>이 장의 내용</summary>
+<nav aria-label="이 장의 내용"><ol><li><a href="#t208">학습한 내용</a></li><li><a href="#t214">관련 자료</a></li></ol></nav>
+</details>
+</div>
+</aside>
+<main id="main" tabindex="-1">
+<p class="eyebrow">From Zero to Agents · AI 에이전트 실습 · 09 / 09</p>
+<h1 class="page-title" id="conclusion-and-resources">마무리 및 참고 자료</h1>
+<div class="page-meta"><span>한국어</span><span>원문 기준 2026-10-11</span></div>
+<noscript><p class="no-script">본문과 목차는 JavaScript 없이도 읽을 수 있습니다. 코드 복사와 이미지 확대는 JavaScript가 필요합니다.</p></noscript>
+<article>
+<p id="t207">축하합니다! Snowflake에서 AI 에이전트를 위한 엔드투엔드 데이터 파이프라인을 구축했습니다. Cortex AI로 원시 마케팅 데이터와 비정형 고객 피드백을 실행 가능한 인사이트로 전환하고, Dynamic Table로 데이터 보강을 자동화했으며, 거버넌스가 적용된 마케팅 인텔리전스 에이전트를 생성했습니다.</p>
+<h3 id="t208">학습한 내용<a aria-label="학습한 내용" class="anchor-link" href="#t208">#</a></h3>
+<ul>
+<li id="t209">SQL에서 Cortex AI Function(<code>AI_SENTIMENT</code>, <code>AI_CLASSIFY</code>)을 직접 사용한 텍스트 분석</li>
+<li id="t210">자동화된 실시간 AI 데이터 보강을 위한 Dynamic Table 생성</li>
+<li id="t211">기술적인 스키마를 비즈니스 친화적인 용어에 매핑하는 Semantic View 구성</li>
+<li id="t212">Cortex Analyst와 Cortex Search 도구를 갖춘 AI 에이전트 설정</li>
+<li id="t213">Dynamic Data Masking과 RBAC를 활용한 엔터프라이즈 보안 구현</li>
+</ul>
+<h3 id="t214">관련 자료<a aria-label="관련 자료" class="anchor-link" href="#t214">#</a></h3>
+<ul>
+<li id="t215"><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql" rel="noopener noreferrer" target="_blank">Snowflake Cortex AI 문서</a></li>
+<li id="t216"><a href="https://docs.snowflake.com/en/user-guide/dynamic-tables-about" rel="noopener noreferrer" target="_blank">Dynamic Table 개요</a></li>
+<li id="t217"><a href="https://docs.snowflake.com/en/user-guide/views-semantic/overview" rel="noopener noreferrer" target="_blank">Semantic View 문서</a></li>
+<li id="t218"><a href="https://github.com/Snowflake-Labs/sfguide-getting-started-with-snowflake-intelligence" rel="noopener noreferrer" target="_blank">Snowflake CoWork 시작하기</a></li>
+<li id="t219"><a href="https://docs.snowflake.com/" rel="noopener noreferrer" target="_blank">Snowflake 문서</a></li>
+</ul></article>
+<nav aria-label="전체 목차" class="chapter-footer"><a href="security.html"><span>이전</span>보안 (선택)</a><a href="index.html">처음으로</a></nav>
+<footer class="page-footer">교육용 참고 번역 · 공식 웹사이트가 아닙니다 <a href="https://www.snowflake.com/en/developers/guides/from-zero-to-agents/" rel="noopener noreferrer" target="_blank">영어 원문</a></footer>
+</main>
+</div>
+<dialog aria-label="원본 이미지 확대" class="image-dialog">
+<div class="dialog-top">
+<p></p>
+<button aria-label="확대 이미지 닫기" class="icon-button" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"></path></svg>
+</button>
+</div>
+<img alt=""/>
+</dialog>
+<div aria-atomic="true" aria-live="polite" class="status" role="status"></div>
+<script>const ui = JSON.parse(document.getElementById('guide-ui').textContent);
+document.documentElement.classList.add('js');
+const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1"/><path d="M16 8V4H4v12h4"/></svg>';
+const statusRegion = document.querySelector('[role="status"]');
+let statusTimer;
+function notify(message) {
+  clearTimeout(statusTimer);
+  statusRegion.textContent = message;
+  statusTimer = setTimeout(() => { statusRegion.textContent = ''; }, 5000);
+}
+document.querySelectorAll('.code-frame').forEach(frame => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'copy-button';
+  button.innerHTML = copyIcon;
+  const label = document.createElement('span');
+  label.textContent = ui.copy;
+  button.append(label);
+  button.setAttribute('aria-label', ui.copy_label);
+  frame.querySelector('.code-header').append(button);
+  button.addEventListener('click', async () => {
+    const code = frame.querySelector('code');
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(code.textContent);
+      notify(ui.copied);
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      notify(ui.copy_fallback);
+    }
+  });
+});
+const menu = document.querySelector('.mobile-menu');
+const menuContent = document.querySelector('.sidebar-content');
+menu.addEventListener('click', () => {
+  const open = menuContent.classList.toggle('open');
+  menu.setAttribute('aria-expanded', String(open));
+});
+const dialog = document.querySelector('.image-dialog');
+const dialogImage = dialog.querySelector('img');
+const dialogCaption = dialog.querySelector('p');
+let imageTrigger;
+document.querySelectorAll('.figure img').forEach(image => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'image-button';
+  button.setAttribute('aria-label', ui.enlarge + (image.alt ? ': ' + image.alt : ''));
+  image.before(button);
+  button.append(image);
+  button.addEventListener('click', () => {
+    imageTrigger = button;
+    dialogImage.src = image.src;
+    dialogImage.alt = image.alt;
+    dialogCaption.textContent = image.alt;
+    dialog.showModal();
+  });
+});
+dialog.querySelector('button').addEventListener('click', () => dialog.close());
+dialog.addEventListener('click', event => {
+  if (event.target === dialog) dialog.close();
+});
+dialog.addEventListener('close', () => {
+  dialogImage.removeAttribute('src');
+  imageTrigger?.focus();
+});
+const progress = document.querySelector('.progress span');
+let scrollPending = false;
+function updateProgress() {
+  const remaining = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (remaining > 0 ? Math.max(0, Math.min(100, window.scrollY / remaining * 100)) : 100) + '%';
+  scrollPending = false;
+}
+window.addEventListener('scroll', () => {
+  if (!scrollPending) {
+    scrollPending = true;
+    requestAnimationFrame(updateProgress);
+  }
+}, { passive: true });
+window.addEventListener('resize', updateProgress);
+window.addEventListener('load', updateProgress);
+updateProgress();
+
+const themeButton = document.querySelector('.theme-button');
+const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+const currentTheme = () => document.documentElement.dataset.theme || (darkQuery.matches ? 'dark' : 'light');
+function syncTheme() {
+  const theme = document.documentElement.dataset.theme;
+  const label = currentTheme() === 'dark' ? ui.theme_to_light : ui.theme_to_dark;
+  themeButton.setAttribute('aria-label', label);
+  themeButton.title = label;
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (/^[a-z][a-z0-9+.-]*:|^#|^\/\//i.test(href)) return;
+    const url = new URL(href, location.href);
+    if (theme) url.searchParams.set('theme', theme); else url.searchParams.delete('theme');
+    link.setAttribute('href', url.pathname.split('/').pop() + url.search + url.hash);
+  });
+  const page = new URL(location.href);
+  if (theme) page.searchParams.set('theme', theme); else page.searchParams.delete('theme');
+  history.replaceState(history.state, '', page);
+}
+themeButton.addEventListener('click', () => {
+  document.documentElement.dataset.theme = currentTheme() === 'dark' ? 'light' : 'dark';
+  syncTheme();
+});
+darkQuery.addEventListener('change', syncTheme);
+syncTheme();</script>
+</body>
+</html>
