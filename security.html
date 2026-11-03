@@ -267,7 +267,7 @@ h3:hover .anchor-link, h4:hover .anchor-link, .anchor-link:focus { opacity: 1; }
 <div class="code-frame"><div class="code-header">코드 / 텍스트</div><pre><code class="language-sql" id="code-02">USE DATABASE DASH_DB_SI;
 USE SCHEMA RETAIL;
 
--- Semantic View 생성
+-- Secure View 생성
 CREATE OR REPLACE SECURE VIEW marketing_intelligence_view AS
 SELECT 
     campaign_name AS "Ad Campaign",
@@ -281,7 +281,7 @@ FROM marketing_campaign_metrics;
 SHOW GRANTS ON DATABASE dash_db_si;
 SHOW GRANTS ON SCHEMA dash_db_si.retail;
 
--- Semantic View의 권한 확인
+-- Secure View의 권한 확인
 SHOW GRANTS ON VIEW marketing_intelligence_view;
 
 USE ROLE snowflake_intelligence_admin;
